@@ -81,4 +81,9 @@ public class AuthServiceImpl implements AuthService {
         return userDao.findUserById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
     }
+
+    @Override
+    public List<UserResponse> getStaffByOwnerId(Integer ownerId){
+        return userDao.findStaffByOwnerId(ownerId);
+    }
 }
