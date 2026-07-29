@@ -45,4 +45,9 @@ public class AuthController {
     public ResponseEntity<List<UserResponse>> gettingUsers(){
         return ResponseEntity.ok(authService.getAllUsers());
     }
+
+    @GetMapping("/users/staff")
+    public ResponseEntity<List<UserResponse>> gettingStaffByOwnerId(@AuthenticationPrincipal CustomUserDetails userDetails){
+        return ResponseEntity.ok(authService.getStaffByOwnerId(userDetails.getId()));
+    }
 }

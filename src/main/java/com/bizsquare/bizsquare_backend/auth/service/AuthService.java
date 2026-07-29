@@ -14,4 +14,5 @@ public interface AuthService {
     LoginResponse login(LoginRequest request);
     void registerStaff(AddStaffRequest request, Integer ownerId);
     UserResponse getCurrentUser(Integer userId);
+    List<UserResponse> getStaffByOwnerId(Integer ownerId);
 }

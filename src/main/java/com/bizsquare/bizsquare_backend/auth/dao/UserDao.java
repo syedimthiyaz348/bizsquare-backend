@@ -42,7 +42,7 @@ public class UserDao {
     }
 
     public List<UserResponse> findAll() {
-        return dsl.select(Users.USERS.ID, Users.USERS.NAME, Users.USERS.EMAIL, Users.USERS.OWNER_ID)
+        return dsl.select()
                 .from(Users.USERS)
                 .fetch()
                 .map(record -> new UserResponse(record.get(Users.USERS.ID), record.get(Users.USERS.NAME), record.get(Users.USERS.EMAIL), record.get(Users.USERS.OWNER_ID)));
@@ -55,10 +55,14 @@ public class UserDao {
     }
 
     public Optional<UserResponse> findUserById(Integer userId) {
-        return dsl.select(Users.USERS.ID, Users.USERS.NAME, Users.USERS.EMAIL, Users.USERS.OWNER_ID)
+        return dsl.select()
                 .from(Users.USERS)
                 .where(Users.USERS.ID.eq(userId))
                 .fetchOptional()
                 .map(record -> new UserResponse(record.get(Users.USERS.ID), record.get(Users.USERS.NAME), record.get(Users.USERS.EMAIL), record.get(Users.USERS.OWNER_ID)));
+    }
+
+    public List<UserResponse> findStaffByOwnerId(Integer ownerId){
+        return dsl.select().from(Users.USERS).where(Users.USERS.OWNER_ID.eq(ownerId)).fetch().map(record -> new UserResponse(record.get(Users.USERS.ID), record.get(Users.USERS.NAME), record.get(Users.USERS.EMAIL), record.get(Users.USERS.OWNER_ID)));
     }
 }
