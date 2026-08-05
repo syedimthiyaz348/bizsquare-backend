@@ -1,8 +1,8 @@
 package com.bizsquare.bizsquare_backend.auth.dao;
 
 import com.bizsquare.bizsquare_backend.auth.dto.UserResponse;
-import com.bizsquare.jooq.generated.tables.records.UsersRecord;
-import com.bizsquare.jooq.generated.tables.Users;
+import com.bizsquare.bizsquare_backend.jooq.generated.tables.records.UsersRecord;
+import com.bizsquare.bizsquare_backend.jooq.generated.tables.Users;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
@@ -54,6 +54,10 @@ public class UserDao {
                 .fetchOptional();
     }
 
+    public boolean checkingUserExistsWithEmail(String email){
+        return dsl.fetchExists(dsl.selectFrom(Users.USERS).where(Users.USERS.EMAIL.eq(email)));
+    }
+
     public Optional<UserResponse> findUserById(Integer userId) {
         return dsl.select()
                 .from(Users.USERS)
@@ -64,5 +68,10 @@ public class UserDao {
 
     public List<UserResponse> findStaffByOwnerId(Integer ownerId){
         return dsl.select().from(Users.USERS).where(Users.USERS.OWNER_ID.eq(ownerId)).fetch().map(record -> new UserResponse(record.get(Users.USERS.ID), record.get(Users.USERS.NAME), record.get(Users.USERS.EMAIL), record.get(Users.USERS.OWNER_ID)));
+    }
+
+    public boolean resetPassword(String email, String hashPassword){
+        return dsl.update(Users.USERS).set(Users.USERS.PASSWORD, hashPassword).
+                where(Users.USERS.EMAIL.eq(email)).execute() == 1;
     }
 }

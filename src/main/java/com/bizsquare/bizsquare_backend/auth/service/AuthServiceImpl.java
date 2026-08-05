@@ -3,11 +3,9 @@ package com.bizsquare.bizsquare_backend.auth.service;
 import com.bizsquare.bizsquare_backend.auth.dao.RoleDao;
 import com.bizsquare.bizsquare_backend.auth.dao.UserDao;
 import com.bizsquare.bizsquare_backend.auth.dao.UserRoleDao;
-import com.bizsquare.bizsquare_backend.auth.dto.AddStaffRequest;
-import com.bizsquare.bizsquare_backend.auth.dto.LoginRequest;
-import com.bizsquare.bizsquare_backend.auth.dto.LoginResponse;
-import com.bizsquare.bizsquare_backend.auth.dto.RegisterRequest;
-import com.bizsquare.bizsquare_backend.auth.dto.UserResponse;
+import com.bizsquare.bizsquare_backend.auth.dto.*;
+import com.bizsquare.bizsquare_backend.exception.EmailNotFoundException;
+import com.bizsquare.bizsquare_backend.exception.InvalidPasswordException;
 import com.bizsquare.bizsquare_backend.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -85,5 +83,18 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<UserResponse> getStaffByOwnerId(Integer ownerId){
         return userDao.findStaffByOwnerId(ownerId);
+    }
+    
+    @Override
+    public boolean resetPassword(ResetPasswordRequest request){
+        return userDao.findByEmail(request.email())
+                .map(user -> {
+                    if (!passwordEncoder.matches(request.oldPassword(), user.getPassword())) {
+                        throw new InvalidPasswordException("Your old password is not matched");
+                    }
+                    String hashedPassword = passwordEncoder.encode(request.newPassword());
+                    return userDao.resetPassword(request.email(), hashedPassword);
+                })
+                .orElseThrow(() -> new EmailNotFoundException("Email is not matched"));
     }
 }
