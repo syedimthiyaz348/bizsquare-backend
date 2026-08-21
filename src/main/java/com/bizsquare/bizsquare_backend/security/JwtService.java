@@ -21,7 +21,7 @@ public class JwtService {
     private String secretKey;
 
     private static final long HALF_HOUR_IN_MS = 30 * 60 * 1000;
-    private static final long ONE_YEAR_IN_MS = 365L * 24 * 60 * 60 * 1000;
+    private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -37,7 +37,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, boolean rememberMe) {
-        long expiration = rememberMe ? ONE_YEAR_IN_MS : HALF_HOUR_IN_MS;
+        long expiration = rememberMe ? ONE_DAY_IN_MS : HALF_HOUR_IN_MS;
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
