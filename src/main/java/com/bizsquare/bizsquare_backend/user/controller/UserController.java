@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -20,5 +22,10 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getCurrentUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(authService.getCurrentUser(userDetails.getId()));
+    }
+
+    @GetMapping("/staff")
+    public ResponseEntity<List<UserResponse>> gettingStaffByOwnerId(@AuthenticationPrincipal CustomUserDetails userDetails){
+        return ResponseEntity.ok(authService.getStaffByOwnerId(userDetails.getId()));
     }
 }

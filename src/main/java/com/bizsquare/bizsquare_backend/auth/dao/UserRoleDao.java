@@ -1,6 +1,6 @@
 package com.bizsquare.bizsquare_backend.auth.dao;
 
-import com.bizsquare.jooq.generated.tables.UserRoles;
+import com.bizsquare.bizsquare_backend.jooq.generated.tables.UserRoles;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 

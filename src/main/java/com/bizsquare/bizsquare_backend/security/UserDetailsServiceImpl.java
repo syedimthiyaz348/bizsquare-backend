@@ -1,7 +1,7 @@
 package com.bizsquare.bizsquare_backend.security;
 
 import com.bizsquare.bizsquare_backend.auth.dao.UserDao;
-import com.bizsquare.jooq.generated.tables.records.UsersRecord;
+import com.bizsquare.bizsquare_backend.jooq.generated.tables.records.UsersRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

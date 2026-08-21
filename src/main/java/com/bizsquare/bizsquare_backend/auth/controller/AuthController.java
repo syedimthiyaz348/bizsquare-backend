@@ -4,6 +4,7 @@ import com.bizsquare.bizsquare_backend.auth.dto.AddStaffRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.LoginRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.LoginResponse;
 import com.bizsquare.bizsquare_backend.auth.dto.RegisterRequest;
+import com.bizsquare.bizsquare_backend.auth.dto.ResetPasswordRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.UserResponse;
 import com.bizsquare.bizsquare_backend.auth.service.AuthService;
 import com.bizsquare.bizsquare_backend.security.CustomUserDetails;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -46,8 +49,14 @@ public class AuthController {
         return ResponseEntity.ok(authService.getAllUsers());
     }
 
-    @GetMapping("/users/staff")
-    public ResponseEntity<List<UserResponse>> gettingStaffByOwnerId(@AuthenticationPrincipal CustomUserDetails userDetails){
-        return ResponseEntity.ok(authService.getStaffByOwnerId(userDetails.getId()));
+    @PutMapping("/reset")
+    public ResponseEntity<Object> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        boolean result = authService.resetPassword(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", result);
+        if (result) {
+            response.put("message", "Password reset successfully");
+        }
+        return ResponseEntity.ok(response);
     }
 }

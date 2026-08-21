@@ -180,7 +180,8 @@
 									<inputSchema>public</inputSchema>
 								</database>
 								<target>
-									<packageName>com.bizsquare.jooq.generated</packageName>
+									<packageName>com.bizsquare.bizsquare_backend.jooq.generated</packageName>
+									<directory>target/generated-sources/jooq</directory>
 								</target>
 								<generate>
 									<pojos>true</pojos>
@@ -198,6 +199,25 @@
 						<version>42.7.3</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>add-jooq-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/jooq</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
