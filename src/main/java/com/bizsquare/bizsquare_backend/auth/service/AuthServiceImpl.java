@@ -97,4 +97,18 @@ public class AuthServiceImpl implements AuthService {
                 })
                 .orElseThrow(() -> new EmailNotFoundException("Email is not matched"));
     }
+
+    public boolean setPassword(SetPasswordRequest request){
+        boolean exists =  userDao.checkingUserExistsWithEmail(request.email());
+        boolean response = false;
+        if(exists){
+            String hashedPassword = passwordEncoder.encode(request.newPassword());
+            response =  userDao.resetPassword(request.email(), hashedPassword);
+        }
+
+        return response;
+
+    }
+
+
 }

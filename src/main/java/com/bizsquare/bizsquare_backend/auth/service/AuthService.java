@@ -1,5 +1,6 @@
 package com.bizsquare.bizsquare_backend.auth.service;
 
+import com.bizsquare.bizsquare_backend.auth.dto.SetPasswordRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.AddStaffRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.LoginRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.LoginResponse;
@@ -18,4 +19,5 @@ public interface AuthService {
     UserResponse getCurrentUser(Integer userId);
     List<UserResponse> getStaffByOwnerId(Integer ownerId);
     boolean resetPassword(ResetPasswordRequest request);
+    boolean setPassword(SetPasswordRequest request);
 }

@@ -6,6 +6,7 @@ import com.bizsquare.bizsquare_backend.auth.dto.LoginResponse;
 import com.bizsquare.bizsquare_backend.auth.dto.RegisterRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.ResetPasswordRequest;
 import com.bizsquare.bizsquare_backend.auth.dto.UserResponse;
+import com.bizsquare.bizsquare_backend.auth.dto.SetPasswordRequest;
 import com.bizsquare.bizsquare_backend.auth.service.AuthService;
 import com.bizsquare.bizsquare_backend.security.CustomUserDetails;
 import jakarta.validation.Valid;
@@ -55,6 +56,17 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", result);
         if (result) {
+            response.put("message", "Password reset successfully");
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/setPassword")
+    public ResponseEntity<Object> setPassword(@Valid @RequestBody SetPasswordRequest request){
+        boolean result = authService.setPassword(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", result);
+        if(result){
             response.put("message", "Password reset successfully");
         }
         return ResponseEntity.ok(response);
