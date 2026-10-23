@@ -170,9 +170,9 @@
 						<configuration>
 							<jdbc>
 								<driver>org.postgresql.Driver</driver>
-								<url>jdbc:postgresql://pg-328ac00f-syedaala348-3696.e.aivencloud.com:18477/bizsquare?ssl=require</url>
-								<user>avnadmin</user>
-								<password>${DB_PASSWORD}</password>
+								<url>jdbc:postgresql://localhost:5432/bizsquare_db</url>
+								<user>postgres</user>
+								<password>Syedimmu&amp;97</password>
 							</jdbc>
 							<generator>
 								<database>
