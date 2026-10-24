@@ -168,7 +168,6 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<skip>true</skip>
 							<jdbc>
 								<driver>org.postgresql.Driver</driver>
 								<url>jdbc:postgresql://pg-328ac00f-syedaala348-3696.e.aivencloud.com:18477/bizsquare?ssl=require</url>
